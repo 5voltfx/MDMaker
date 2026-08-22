@@ -1,6 +1,6 @@
 appId: com.5voltfx.mdmaker
 productName: MDMaker
-copyright: Copyright © 2026
+copyright: Copyright © 2026 5voltFX
 directories:
   output: dist
   buildResources: build
@@ -24,7 +24,7 @@ mac:
   hardenedRuntime: false
   gatekeeperAssess: false
   extendInfo:
-    NSHumanReadableCopyright: MDMaker
+    NSHumanReadableCopyright: Copyright © 2026 5voltFX
     CFBundleDocumentTypes:
       - CFBundleTypeName: Markdown Document
         CFBundleTypeRole: Editor

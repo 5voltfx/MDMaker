@@ -133,3 +133,7 @@ src/
 ```
 
 `sample.md` is a deliberately messy document for trying the normalization out.
+
+## License
+
+MIT — see [LICENSE](LICENSE). Copyright © 2026 5voltFX.

@@ -3,8 +3,14 @@
   "version": "1.0.0",
   "description": "WYSIWYG Markdown editor that writes clean, consistent Markdown",
   "main": "./out/main/index.js",
-  "author": "5voltfx",
+  "author": "5voltFX",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/5voltfx/MDMaker.git"
+  },
+  "homepage": "https://github.com/5voltfx/MDMaker#readme",
+  "bugs": "https://github.com/5voltfx/MDMaker/issues",
   "type": "module",
   "scripts": {
     "dev": "electron-vite dev",
