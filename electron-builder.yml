@@ -1,0 +1,51 @@
+appId: com.5voltfx.mdmaker
+productName: MDMaker
+copyright: Copyright © 2026
+directories:
+  output: dist
+  buildResources: build
+files:
+  - out/**/*
+  - package.json
+  - '!**/*.map'
+asar: true
+
+mac:
+  category: public.app-category.productivity
+  # Only ship the English locale; a universal build carries two Chromium copies
+  # and the other ~50 locales add nothing here.
+  electronLanguages: [en]
+  icon: build/icon.icns
+  target:
+    - target: dmg
+      arch: [universal]
+  # Unsigned build: see README for the one-time Gatekeeper step on each Mac.
+  identity: null
+  hardenedRuntime: false
+  gatekeeperAssess: false
+  extendInfo:
+    NSHumanReadableCopyright: MDMaker
+    CFBundleDocumentTypes:
+      - CFBundleTypeName: Markdown Document
+        CFBundleTypeRole: Editor
+        LSHandlerRank: Alternate
+        LSItemContentTypes:
+          - net.daringfireball.markdown
+          - public.plain-text
+        CFBundleTypeExtensions:
+          - md
+          - markdown
+          - mdown
+          - mkd
+
+dmg:
+  title: MDMaker ${version}
+  icon: build/icon.icns
+  contents:
+    - x: 140
+      y: 200
+      type: file
+    - x: 400
+      y: 200
+      type: link
+      path: /Applications

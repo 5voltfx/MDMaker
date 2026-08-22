@@ -1,0 +1,248 @@
+:root {
+  --bg: #ffffff;
+  --bg-chrome: #f6f6f7;
+  --bg-sunken: #f1f1f3;
+  --border: #dcdce0;
+  --text: #1d1d20;
+  --text-dim: #6d6d76;
+  --accent: #2a6df5;
+  --accent-soft: rgba(42, 109, 245, 0.13);
+  --code-bg: #f4f4f6;
+  --toolbar-height: 42px;
+  --status-height: 24px;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1c1c1e;
+    --bg-chrome: #2a2a2d;
+    --bg-sunken: #232326;
+    --border: #3a3a3e;
+    --text: #e8e8ea;
+    --text-dim: #9a9aa2;
+    --accent: #5b93ff;
+    --accent-soft: rgba(91, 147, 255, 0.2);
+    --code-bg: #26262a;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* ---------------------------------------------------------------- Toolbar */
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: var(--toolbar-height);
+  padding: 0 10px;
+  background: var(--bg-chrome);
+  border-bottom: 1px solid var(--border);
+  flex: 0 0 auto;
+  user-select: none;
+}
+
+.tool {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 5px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text);
+  cursor: default;
+}
+
+.tool.wide {
+  padding: 0 9px;
+  font-size: 12px;
+}
+
+.tool:hover:not(:disabled) {
+  background: rgba(127, 127, 127, 0.16);
+}
+
+.tool.active {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.tool:disabled {
+  opacity: 0.35;
+}
+
+.toolbar select {
+  height: 26px;
+  max-width: 160px;
+  padding: 0 6px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 12px;
+}
+
+.toolbar .sep {
+  width: 1px;
+  height: 18px;
+  margin: 0 6px;
+  background: var(--border);
+}
+
+.toolbar .spacer {
+  flex: 1;
+}
+
+/* ------------------------------------------------------------ Bubble menu */
+
+.bubble {
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-chrome);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+}
+
+/* ---------------------------------------------------------------- Surface */
+
+.surface {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.editor-scroll {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.source {
+  height: 100%;
+}
+
+.source .cm-editor {
+  height: 100%;
+}
+
+/* ------------------------------------------------------------- Status bar */
+
+.status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: var(--status-height);
+  padding: 0 12px;
+  background: var(--bg-chrome);
+  border-top: 1px solid var(--border);
+  color: var(--text-dim);
+  font-size: 11px;
+  flex: 0 0 auto;
+  user-select: none;
+}
+
+.status .path {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.status .counts {
+  white-space: nowrap;
+}
+
+/* ----------------------------------------------------------------- Dialog */
+
+.prompt {
+  min-width: 380px;
+  padding: 18px;
+  border: none;
+  border-radius: 12px;
+  background: var(--bg-chrome);
+  color: var(--text);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.3);
+}
+
+.prompt::backdrop {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.prompt h2 {
+  margin: 0 0 12px;
+  font-size: 14px;
+}
+
+.prompt label {
+  display: block;
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.prompt input {
+  display: block;
+  width: 100%;
+  margin-top: 5px;
+  padding: 7px 9px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 13px;
+}
+
+.prompt input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+}
+
+.prompt .actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.prompt button {
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 12px;
+}
+
+.prompt button.primary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
