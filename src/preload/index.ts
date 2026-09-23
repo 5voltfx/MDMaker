@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer, webUtils } from 'electron'
-import type { DocState, DocumentFile, MenuCommand } from '../shared/types'
+import type { DocState, DocumentFile, MenuCommand, TableMenuState } from '../shared/types'
 
 const api = {
   /** Document this window was launched with, if any. */
@@ -24,6 +24,9 @@ const api = {
 
   /** Keep the native title bar, proxy icon and close guard in sync. */
   reportState: (state: DocState): void => ipcRenderer.send('doc:state', state),
+
+  /** Pop up the native table context menu; choices arrive via onMenuCommand. */
+  showTableMenu: (state: TableMenuState): void => ipcRenderer.send('table:context-menu', state),
 
   /** Resolve an OS path for a dropped File object. */
   pathForFile: (file: File): string => webUtils.getPathForFile(file),

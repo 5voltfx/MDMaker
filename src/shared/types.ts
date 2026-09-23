@@ -38,5 +38,19 @@ export type MenuCommand =
   | 'block:table'
   | 'block:rule'
   | 'block:image'
+  | 'table:row-above'
+  | 'table:row-below'
+  | 'table:delete-row'
+  | 'table:column-left'
+  | 'table:column-right'
+  | 'table:delete-column'
+  | 'table:delete'
+
+/** Which table actions make sense for the cell that was right-clicked. */
+export interface TableMenuState {
+  canAddRowAbove: boolean
+  canDeleteRow: boolean
+  canDeleteColumn: boolean
+}
 
 export type CloseChoice = 'save' | 'discard' | 'cancel'

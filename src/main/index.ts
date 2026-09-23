@@ -1,6 +1,6 @@
 import { app, BrowserWindow, ipcMain, net, protocol, shell } from 'electron'
 import { basename, join } from 'node:path'
-import { buildMenu } from './menu'
+import { buildMenu, popupTableMenu } from './menu'
 import {
   readDocument,
   writeDocument,
@@ -10,7 +10,7 @@ import {
   showError
 } from './file-ops'
 import { loadWindowState, saveWindowState } from './window-state'
-import type { DocState, DocumentFile } from '../shared/types'
+import type { DocState, DocumentFile, TableMenuState } from '../shared/types'
 
 const isDev = !app.isPackaged
 
@@ -249,6 +249,11 @@ function registerIpc(): void {
     } catch {
       return null
     }
+  })
+
+  ipcMain.on('table:context-menu', (event, state: TableMenuState) => {
+    const win = BrowserWindow.fromWebContents(event.sender)
+    if (win) popupTableMenu(win, state)
   })
 
   ipcMain.handle('app:home-dir', () => app.getPath('home'))

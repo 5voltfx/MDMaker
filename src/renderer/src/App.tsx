@@ -3,6 +3,7 @@ import { EditorContent, useEditor, useEditorState } from '@tiptap/react'
 import { extensions } from './editor/extensions'
 import { Toolbar, type Mode } from './editor/Toolbar'
 import { SelectionMenu } from './editor/SelectionMenu'
+import { handleTableContextMenu, runTableCommand } from './editor/table-menu'
 import { Source } from './source/Source'
 import { PromptDialog, type PromptRequest } from './PromptDialog'
 import { documentDirectory, htmlToMarkdown, markdownToHtml, resolveImageSrc } from './markdown'
@@ -185,6 +186,7 @@ export default function App(): JSX.Element {
       if (command === 'view:toggle-source') return toggleMode()
       // Formatting only applies to the rich-text surface.
       if (latest.current.mode === 'source') return
+      if (runTableCommand(editor, command)) return
 
       const chain = editor.chain().focus()
       switch (command) {
@@ -232,6 +234,14 @@ export default function App(): JSX.Element {
       }
     })
   }, [editor, save, toggleMode, insertLink, insertImage])
+
+  useEffect(() => {
+    if (!editor) return
+    const dom = editor.view.dom
+    const onContextMenu = (event: MouseEvent): void => handleTableContextMenu(editor, event)
+    dom.addEventListener('contextmenu', onContextMenu)
+    return () => dom.removeEventListener('contextmenu', onContextMenu)
+  }, [editor])
 
   /* ---------------------------------------------------------------- *
    * Dropping a file onto the window opens it

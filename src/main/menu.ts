@@ -1,5 +1,5 @@
 import { app, Menu, BrowserWindow, shell } from 'electron'
-import type { MenuCommand } from '../shared/types'
+import type { MenuCommand, TableMenuState } from '../shared/types'
 
 type Send = (command: MenuCommand) => void
 
@@ -135,4 +135,33 @@ export function buildMenu(handlers: MenuHandlers): void {
   ]
 
   Menu.setApplicationMenu(Menu.buildFromTemplate(template))
+}
+
+/** Right-click menu for a table cell. Choices go back to the window that asked. */
+export function popupTableMenu(win: BrowserWindow, state: TableMenuState): void {
+  const item = (
+    label: string,
+    command: MenuCommand,
+    enabled = true
+  ): Electron.MenuItemConstructorOptions => ({
+    label,
+    enabled,
+    click: () => win.webContents.send('menu:command', command)
+  })
+
+  Menu.buildFromTemplate([
+    { role: 'cut' },
+    { role: 'copy' },
+    { role: 'paste' },
+    { type: 'separator' },
+    item('Insert Row Above', 'table:row-above', state.canAddRowAbove),
+    item('Insert Row Below', 'table:row-below'),
+    item('Delete Row', 'table:delete-row', state.canDeleteRow),
+    { type: 'separator' },
+    item('Insert Column Left', 'table:column-left'),
+    item('Insert Column Right', 'table:column-right'),
+    item('Delete Column', 'table:delete-column', state.canDeleteColumn),
+    { type: 'separator' },
+    item('Delete Table', 'table:delete')
+  ]).popup({ window: win })
 }
